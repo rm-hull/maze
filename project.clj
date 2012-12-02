@@ -4,18 +4,14 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.0-beta1"]
                  [noir "1.3.0-beta10"]
-                 [jayq "0.1.0-alpha4"]
+                 [jayq "0.3.2"]
                  [crate "0.2.1"]
                  [fetch "0.1.0-alpha2"]
-                 [org.clojars.rm-hull/monet "0.1.1-SNAPSHOT"]
-                 [ring/ring-core "1.1.6"]
-                 [ring-basic-authentication "1.0.1"]
-                 [ibdknox/ring-gzip-middleware "0.1.1"]
-                 [com.cemerick/drawbridge "0.0.6"]]
+                 [org.clojars.rm-hull/monet "0.1.1-SNAPSHOT"]]
   :cljsbuild {
     :builds [
       {:source-path "src/maze/client"
-       :compiler {:output-to "resources/public/cljs/maze"
+       :compiler {:output-to "resources/public/cljs/maze.js"
                   :optimizations :simple
                   :externs ["https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"]
                   :print-input-delimiter true
