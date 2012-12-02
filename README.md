@@ -1,10 +1,12 @@
 # maze
 
-Maze generator and solver, in ClojureScript with a HTML5 canvas.
+Maze generator and solver, in ClojureScript with a HTML5 canvas. Generator
+algorithm loosely based on the pseudo-code presented at http://www.mazeworks.com/mazegen/mazetut/.
 
 ## Usage
 
-FIXME
+Run locally in development mode with `lein run` and browse to http://localhost:8080.
+Note, requires leiningen 2.0
 
 ## License
 
