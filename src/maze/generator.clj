@@ -5,11 +5,11 @@
     (* (rem y h) w)
     (rem x w)))
 
-(defn pos->coord [^long p [^long w ^long h]]
-  [(rem p w) (rem (quot p w) h)])
+;(defn pos->coord [^long p [^long w ^long h]]
+;  [(rem p w) (rem (quot p w) h)])
 
 (defn- init-maze
-  "Create an initial maze of size (W x H) with all walls set"
+  "Initialize a maze of size (W x H) with all walls set"
   [^long w ^long h]
   { :size [w h]
     :data (into [] (repeat (* w h) #{ :north :west } ))})
@@ -27,7 +27,11 @@
            (add-if (< (rem p w) (dec w)) (inc p))
            (filter #(and (>= % 0) (< % (* w h))))))))
 
-(defn wall-between? [maze ^long p1 ^long p2]
+(defn wall-between? 
+  "Checks to see if there is a wall between two (adjacent) points in the
+   maze. The return value will indicate the wall type (:north, :west, ..).
+   If the points aren't adjacent, nil is returned."
+  [maze ^long p1 ^long p2]
   (if (> p1 p2)
     (wall-between? maze p2 p1)
     (let [[w h] (:size maze)]
@@ -35,7 +39,11 @@
       (= (- p2 p1) w) (:north ((:data maze) p2))
       (= (- p2 p1) 1) (:west  ((:data maze) p2))))))
 
-(defn knockdown-wall [maze ^long p1 ^long p2]
+(defn knockdown-wall 
+  "Knocks down the wall between the two given points in the maze. Assumes
+   that they are adjacent, otherwise it doesn't make any sense (and wont
+   actually make any difference anyway)"
+  [maze ^long p1 ^long p2]
   (if (> p1 p2)
     (knockdown-wall maze p2 p1)
     (let [[w h] (:size maze)
@@ -45,7 +53,10 @@
           new-data (assoc (:data maze) p2 new-walls)]
       (assoc maze :data new-data))))
 
-(defn generate-maze [visitor-fn ^long w ^long h]
+(defn create-maze 
+  "Recursively creates a maze based on the supplied dimensions. The visitor
+   function allows a different strategy for selecting the next neighbour."
+  [visitor-fn ^long w ^long h]
   (loop [maze    (init-maze w h)
          visited {0 true}
          stack   [0]]
@@ -77,4 +88,5 @@
     (print "+---")) 
   (println "+")))
 
-(print-maze (generate-maze rand-int 20 20))
+(print-maze (create-maze rand-int 20 15))
+
