@@ -12,8 +12,8 @@
     :builds [
       {:source-path "src/maze/client"
        :compiler {:output-to "resources/public/cljs/maze.js"
-                  :optimizations :simple
-                  :externs ["https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"]
+                  :optimizations :advanced
+                  :externs ["./externs/jquery-1.8.js"]
                   :print-input-delimiter true
                   :pretty-print true}}]}
   :hooks [leiningen.cljsbuild]
