@@ -1,7 +1,8 @@
 # maze
 
 Maze generator and solver, served up with functional Clojure & Noir, and
-front-end fun in ClojureScript with rendering in HTML5 canvas. 
+front-end fun in ClojureScript with rendering in HTML5 canvas. See 
+http://maze.destructuring-bind.org for work-in-progress. 
 
 ## TODO
 
