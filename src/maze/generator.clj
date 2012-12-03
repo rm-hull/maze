@@ -1,12 +1,11 @@
 (ns maze.generator)
 
-(defn coord->pos [[^long x ^long y] [^long w ^long h]]
+(defn coord->pos 
+  "Converts [x,y] co-ords into an offset into the maze data"
+  [[^long x ^long y] [^long w ^long h]]
   (+ 
     (* (rem y h) w)
     (rem x w)))
-
-;(defn pos->coord [^long p [^long w ^long h]]
-;  [(rem p w) (rem (quot p w) h)])
 
 (defn- init-maze
   "Initialize a maze of size (W x H) with all walls set"
@@ -87,6 +86,3 @@
   (doseq [x (range w)] 
     (print "+---")) 
   (println "+")))
-
-(print-maze (create-maze rand-int 20 15))
-
