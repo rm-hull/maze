@@ -31,16 +31,14 @@
 
 (document-ready
   (fn []
-    (let [canvas    ($ :canvas#world)
+    (let [div       ($ :div#wrapper)
+          canvas    ($ :canvas#world)
           ctx       (get-context (.get canvas 0) "2d")
           cell-size (data canvas "cell-size")
-          width     (- (.-innerWidth js/window) 30)
-          height    (- (.-innerHeight js/window) 30)]
+          width     (quot (.-offsetWidth (first div)) cell-size)
+          height    (quot (.-offsetHeight (first div)) cell-size)]
       (-> canvas
-          (attr :width width)
-          (attr :height height))
-      (fm/remote 
-        (generate-maze 
-          (quot (- width 2) cell-size) 
-          (quot (- height 2) cell-size))
-        [maze] (draw ctx maze cell-size)))))
+          (attr :width (+ 2 (* cell-size width)))
+          (attr :height (+ 2 (* cell-size height))))
+      (fm/remote (generate-maze width height) [maze] 
+        (draw ctx maze cell-size)))))
