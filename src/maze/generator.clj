@@ -48,9 +48,8 @@
     (let [[w h] (:size maze)
           new-walls (cond 
                       (= (- p2 p1) w) (disj ((:data maze) p2) :north)
-                      (= (- p2 p1) 1) (disj ((:data maze) p2) :west))
-          new-data (assoc (:data maze) p2 new-walls)]
-      (assoc maze :data new-data))))
+                      (= (- p2 p1) 1) (disj ((:data maze) p2) :west))]
+      (assoc-in maze [:data p2] new-walls))))
 
 (defn create-maze 
   "Recursively creates a maze based on the supplied dimensions. The visitor
