@@ -4,7 +4,8 @@
         [hiccup.core :only [html]] 
         [hiccup.page :only [include-css include-js html5]]
         [hiccup.element :only [javascript-tag]]
-        [maze.generator]))
+        [maze.generator]
+        [maze.solver]))
 
 (defmulti to-number class)
 (defmethod to-number Number [n] n)
@@ -46,10 +47,14 @@
             [:div {:class (str "bar" x)}]))]]))
 
 (defremote generate-maze [width height]
-  (create-maze 
-    rand-int
-    (to-number width) 
-    (to-number height)))
+  (let [w (to-number width)
+        h (to-number height)
+        maze (create-maze rand-int w h)
+        path (shortest-path maze 0 (dec (* w h)))]
+    (assoc maze :path path)))
+
+(defremote solve [maze from to]
+  (shortest-path maze from to))
 
 (defpage [:get "/"] {:as params}
   (layout
