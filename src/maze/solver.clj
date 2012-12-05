@@ -1,1 +1,51 @@
-(ns maze.solver)
+(ns maze.solver
+  (:use [maze.common])) 
+
+(defn- connecting-neighbours 
+  "Yields a list of directly connected neighbours (i.e. adjacent cells with
+   no walls between them)."
+  [maze p]
+  (->> (neighbours p (:size maze)) 
+       (remove (partial wall-between? maze p))))
+ 
+(defn- remove-longer-paths 
+  "Filters out those neighbours from the predecessors whose length is greater
+   than the current length"
+  [pred neighbours curr-len]
+  (remove #(if-let [old (pred %)] (>= curr-len (:length old))) neighbours))
+ 
+(defn- path-length 
+  "Given a map of predecessors of a specific start point, extract out the
+   length for the cell at offset n."
+  [pred n]
+  (get-in pred [n :length] 0))
+ 
+(defn- build-predecessors 
+  "Constructs a map of predessors for cells between 'start' and 'stop-at' cells."
+  [maze start stop-at]
+  (loop [pred   (hash-map start { :predecessor nil :length 0 }) 
+         active (sorted-map start 0)]
+    (cond
+      (empty? active) pred
+      (= (first active) stop-at) pred
+      :else (let [curr (ffirst active)
+                  new-length  (inc (path-length pred curr))
+                  neighbours  (remove-longer-paths pred (connecting-neighbours maze curr) new-length)
+                  next-gen    (if (empty? neighbours) pred   (apply (partial assoc pred)   (mapcat vector neighbours (repeat (hash-map :predecessor curr :length new-length)))))
+                  next-active (if (empty? neighbours) active (apply (partial assoc active) (mapcat vector neighbours (repeat new-length))))]
+              (recur
+                next-gen
+                (dissoc next-active curr))))))
+
+(defn shortest-path 
+  "Recurses over the predecessors between 'from' and 'to' pulling out the 
+   cells into an ordered list which represents the shortest path between
+   the two points."
+  [maze from to]
+  (let [pred (build-predecessors maze from to)]
+    (loop [n    to
+           result nil]
+      (let [p (get-in pred [n :predecessor])]
+      (if (nil? p)
+        (cons n result)
+        (recur p (cons n result)))))))
