@@ -92,3 +92,6 @@ Note, requires leiningen 2.0
 * http://blade.nagaokaut.ac.jp/cgi-bin/scat.rb/ruby/ruby-talk/141783
  
 * http://www.mazeworks.com/mazegen/mazetut/
+
+* http://lukevanderhart.com/2011/09/30/using-javascript-and-clojurescript.html
+
