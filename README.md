@@ -10,7 +10,7 @@ for some variations:
 
 * http://maze.destructuring-bind.org?draw=snake&cell-size=6 - snake solver.
 
-* http://maze.destructuring-bind.org?draw=trail&cell-size=6 - snail-trails.
+* http://maze.destructuring-bind.org?draw=snail&cell-size=6 - snail-trails.
 
 [Works on Chromium, Firefox, iPad - haven't tried the others - feedback welcome]
 

@@ -2,7 +2,7 @@
   (:require [fetch.remotes :as remotes])
   (:require-macros [fetch.macros :as fm])
   (:use [monet.canvas :only [get-context stroke stroke-style stroke-cap begin-path close-path line-to move-to stroke-width]]
-        [jayq.core :only [$ document-ready data attr]]))
+        [jayq.core :only [$ document-ready data attr hide]]))
 
 (defn coord->pos [[^long x ^long y] [^long w ^long h]]
   (+ 
@@ -72,10 +72,10 @@
 
 (defn animate [ctx maze cell-size color erase-color snake-length]
   (letfn [(loop [] 
-    (when (<= @current-cell (- (count (:path maze)) snake-length))
-      (.  js/window (requestAnimFrame loop))
-      (draw-snake ctx maze cell-size color erase-color @current-cell (+ @current-cell snake-length))
-      (swap! current-cell inc)))]
+            (when (<= @current-cell (- (count (:path maze)) snake-length))
+              (.  js/window (requestAnimFrame loop))
+              (draw-snake ctx maze cell-size color erase-color @current-cell (+ @current-cell snake-length))
+              (swap! current-cell inc)))]
     (do
       (reset! current-cell 0)
       (loop))))
@@ -94,7 +94,8 @@
           (attr :height (+ 2 (* cell-size height))))
       (fm/remote (generate-maze width height) [maze] 
         (draw-maze ctx maze cell-size)
+        (hide ($ :div#spinner))
         (case (str draw-cmd) 
           "path"  (draw-snake ctx maze cell-size "red" "red" 0 (count (:path maze)))
           "snake" (animate ctx maze cell-size "#55B95F" "white" 8)
-          "trail" (animate ctx maze cell-size "#8182AE" "#E2E2F1" 8))))))
+          "snail" (animate ctx maze cell-size "#8182AE" "#E2E2F1" 3))))))

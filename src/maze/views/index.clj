@@ -60,6 +60,9 @@
 (defpage [:get "/"] {:as params}
   (layout
     (html
-      [:canvas#world 
-        { :data-cell-size (get params :cell-size 10)
-          :data-draw      (get params :draw "") }])))
+      [:div
+        (spinner "container grey")
+        [:canvas#world 
+          { :data-cell-size (get params :cell-size 10)
+            :data-draw      (get params :draw "") }]
+       ])))

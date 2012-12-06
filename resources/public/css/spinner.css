@@ -97,9 +97,9 @@ div.spinner div.bar12 {
 
 div.container {
   position: absolute;
-  top: 47px;
-  left: 47px;
-  display: none;
+  top: 40%;
+  left: 45%;
+  display: block;
   padding: 1.5em 1.5em 1.25em;
   background: rgba(0,0,0,0.8);
   -webkit-border-radius: 1em;
