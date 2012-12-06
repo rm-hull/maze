@@ -30,6 +30,7 @@
      (include-css "/css/default.css")
      (include-css "/css/spinner.css")
      (include-js "https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js")
+     (include-js "js/requestAnim.js")
      ;(include-js "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js")
      ]
     [:body
@@ -54,11 +55,11 @@
     (assoc maze :path path)))
 
 (defremote solve [maze from to]
-  (shortest-path maze from to))
+  (assoc maze :path (shortest-path maze from to)))
 
 (defpage [:get "/"] {:as params}
   (layout
     (html
       [:canvas#world 
         { :data-cell-size (get params :cell-size 10)
-          :data-draw-path (get params :draw-path "n") }])))
+          :data-draw      (get params :draw "") }])))
