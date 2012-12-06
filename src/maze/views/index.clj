@@ -59,4 +59,6 @@
 (defpage [:get "/"] {:as params}
   (layout
     (html
-      [:canvas#world {:data-cell-size (get params :cell-size 10)}])))
+      [:canvas#world 
+        { :data-cell-size (get params :cell-size 10)
+          :data-draw-path (get params :draw-path "n") }])))
