@@ -1,17 +1,25 @@
 # maze
 
 Maze generator and solver, served up with functional Clojure & Noir, and
-front-end fun in ClojureScript with rendering in HTML5 canvas. See 
-http://maze.destructuring-bind.org for work-in-progress. 
+front-end fun in ClojureScript with rendering in HTML5 canvas. See here
+for some variations:
+
+* http://maze.destructuring-bind.org - default maze generator.
+
+* http://maze.destructuring-bind.org?draw=path - default maze generator & solver.
+
+* http://maze.destructuring-bind.org?draw=snake&cell-size=6 - snake solver.
+
+* http://maze.destructuring-bind.org?draw=trail&cell-size=6 - snail-trails.
 
 ## TODO
 
-* View implementation
+* Follow the mouse clicks - when in snake or trails mode, clicking/tapping
+  on the maze will cause the path to be re-evaluated with the end point at
+  that mouse click.
 
-* Client-side scripting for rendering path
-
-* Roll the ball round the maze & against the clock -- device orientation 
-  and motion API integration
+* iPad game: Roll the ball round the maze & against the clock -- device 
+  orientation and motion API integration
 
 ## Implementation details
 
