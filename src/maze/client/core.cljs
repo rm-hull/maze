@@ -9,22 +9,33 @@
     (* (rem y h) w)
     (rem x w)))
 
-(defn draw-path-segments [ctx maze cell-size]
+(defn draw-path-segments [ctx maze cell-size start end]
   (let [[w h] (:size maze)
         offset (inc (quot cell-size 2))]
-    (doseq [p (:path maze)
+    (doseq [p (subvec (:path maze) start end)
             :let [x (rem p w)
                   y (rem (quot p w) h)]]
       (line-to ctx (+ (* x cell-size) offset) (+ (* y cell-size) offset)))
     ctx)) ; important to return ctx for threading
 
-(defn draw-path [ctx maze cell-size]
+(defn eraser [ctx maze cell-size color p]
+  (if (and (>= p 0) (< p (dec (apply * (:size maze)))))
+    (-> ctx
+       (stroke-style color)
+       (begin-path)
+       (draw-path-segments maze cell-size p (+ p 2))
+       (stroke)
+       (close-path)))
+  ctx) ; important to return ctx for threading
+
+(defn draw-snake [ctx maze cell-size color erase-color start end]
   (-> ctx
       (stroke-width 4)
       (stroke-cap "square")
-      (stroke-style "red")
+      (eraser maze cell-size erase-color (dec start))
+      (stroke-style color)
       (begin-path)
-      (draw-path-segments maze cell-size)
+      (draw-path-segments maze cell-size start end)
       (stroke)
       (close-path)))
 
@@ -51,24 +62,39 @@
         (stroke-style "#606060")
         (begin-path)
         (move-to 0 (inc (* h cell-size)))
-        (line-to (inc (* w cell-size)) (inc  (* h cell-size)))
-        (line-to (inc  (* w cell-size)) 0)
+        (line-to (inc (* w cell-size)) (inc (* h cell-size)))
+        (line-to (inc (* w cell-size)) 0)
         (draw-cells maze cell-size)   
         (stroke)
         (close-path))))
+ 
+(def current-cell (atom 0))
 
+(defn animate [ctx maze cell-size color erase-color snake-length]
+  (letfn [(loop [] 
+    (when (<= @current-cell (- (count (:path maze)) snake-length))
+      (.  js/window (requestAnimFrame loop))
+      (draw-snake ctx maze cell-size color erase-color @current-cell (+ @current-cell snake-length))
+      (swap! current-cell inc)))]
+    (do
+      (reset! current-cell 0)
+      (loop))))
+  
 (document-ready
   (fn []
-    (let [div        ($ :div#wrapper)
-          canvas     ($ :canvas#world)
-          ctx        (get-context (.get canvas 0) "2d")
-          cell-size  (data canvas "cell-size")
-          draw-path? (data canvas "draw-path")
-          width      (quot (.-offsetWidth (first div)) cell-size)
-          height     (quot (.-offsetHeight (first div)) cell-size)]
+    (let [div       ($ :div#wrapper)
+          canvas    ($ :canvas#world)
+          ctx       (get-context (.get canvas 0) "2d")
+          cell-size (data canvas "cell-size")
+          draw-cmd  (data canvas "draw")
+          width     (quot (.-offsetWidth (first div)) cell-size)
+          height    (quot (.-offsetHeight (first div)) cell-size)]
       (-> canvas
-          (attr :width (+ 2 (* cell-size width)))
+          (attr :width  (+ 2 (* cell-size width)))
           (attr :height (+ 2 (* cell-size height))))
       (fm/remote (generate-maze width height) [maze] 
         (draw-maze ctx maze cell-size)
-        (if (= (str draw-path?) "y") (draw-path ctx maze cell-size))))))
+        (case (str draw-cmd) 
+          "path"  (draw-snake ctx maze cell-size "red" "red" 0 (count (:path maze)))
+          "snake" (animate ctx maze cell-size "#55B95F" "white" 8)
+          "trail" (animate ctx maze cell-size "#8182AE" "#E2E2F1" 8))))))
