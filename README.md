@@ -1,7 +1,7 @@
 # maze
 
 Maze generator and solver, served up with functional Clojure & Noir, and
-front-end fun in ClojureScript with rendering in HTML5 canvas. See here
+front-end fun in ClojureScript with rendering using HTML5 canvas. See here
 for some variations:
 
 * http://maze.destructuring-bind.org - default maze generator.
@@ -12,13 +12,15 @@ for some variations:
 
 * http://maze.destructuring-bind.org?draw=trail&cell-size=6 - snail-trails.
 
+[Works on Chromium, Firefox, iPad - haven't tried the others - feedback welcome]
+
 ## TODO
 
 * Follow the mouse clicks - when in snake or trails mode, clicking/tapping
   on the maze will cause the path to be re-evaluated with the end point at
   that mouse click.
 
-* iPad game: Roll the ball round the maze & against the clock -- device 
+* iPad game: roll a ball round the maze & against the clock -- device 
   orientation and motion API integration
 
 ## Implementation details
