@@ -13,7 +13,7 @@
       {:source-path "src/maze/client"
        :compiler {:output-to "resources/public/cljs/maze.js"
                   :optimizations :advanced
-                  :externs ["./externs/jquery-1.8.js"]
+                  :externs ["externs/jquery-1.8.js" "externs/requestAnim.js"]
                   :print-input-delimiter true
                   :pretty-print true}}]}
   :hooks [leiningen.cljsbuild]
