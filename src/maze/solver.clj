@@ -54,5 +54,5 @@
            result nil]
       (let [p (get-in pred [n :predecessor])]
       (if (nil? p)
-        (cons n result)
+        (vec (cons n result))
         (recur p (cons n result)))))))
