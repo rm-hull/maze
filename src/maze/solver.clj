@@ -19,6 +19,13 @@
    length for the cell at offset n."
   [pred n]
   (get-in pred [n :length] 0))
+
+(defn- blend-in 
+  "Blends the neighbours (as keys) into the map all with the same value."
+  [map neighbours val]
+  (if (empty? neighbours)
+    map
+    (apply (partial assoc map) (mapcat vector neighbours (repeat val)))))
  
 (defn- build-predecessors 
   "Constructs a map of predessors for cells between 'start' and 'stop-at' cells."
@@ -31,8 +38,8 @@
       :else (let [curr (ffirst active)
                   new-length  (inc (path-length pred curr))
                   neighbours  (remove-longer-paths pred (connecting-neighbours maze curr) new-length)
-                  next-gen    (if (empty? neighbours) pred   (apply (partial assoc pred)   (mapcat vector neighbours (repeat (hash-map :predecessor curr :length new-length)))))
-                  next-active (if (empty? neighbours) active (apply (partial assoc active) (mapcat vector neighbours (repeat new-length))))]
+                  next-gen    (blend-in pred   neighbours (hash-map :predecessor curr :length new-length))
+                  next-active (blend-in active neighbours new-length)]
               (recur
                 next-gen
                 (dissoc next-active curr))))))
