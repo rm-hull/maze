@@ -1,5 +1,6 @@
 (ns maze.solver
-  (:use [maze.common])) 
+  (:use [maze.common]
+        [clojure.data.priority-map])) 
 
 (defn- connecting-neighbours 
   "Yields a list of directly connected neighbours (i.e. adjacent cells with
@@ -31,7 +32,7 @@
   "Constructs a map of predessors for cells between 'start' and 'stop-at' cells."
   [maze start stop-at]
   (loop [pred   (hash-map start { :predecessor nil :length 0 }) 
-         active (sorted-map start 0)]
+         active (priority-map start 0)]
     (cond
       (empty? active) pred
       (= (first active) stop-at) pred
