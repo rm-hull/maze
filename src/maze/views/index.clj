@@ -49,10 +49,8 @@
 
 (defremote generate-maze [width height]
   (let [w (to-number width)
-        h (to-number height)
-        maze (create-maze rand-int w h)
-        path (shortest-path maze 0 (dec (* w h)))]
-    (assoc maze :path path)))
+        h (to-number height)] 
+    (create-maze rand-int w h)))
 
 (defremote solve [maze from to]
   (assoc maze :path (shortest-path maze from to)))
@@ -64,5 +62,6 @@
         (spinner "container grey")
         [:canvas#world 
           { :data-cell-size (get params :cell-size 10)
-            :data-draw      (get params :draw "") }]
+            :data-draw      (get params :draw "")
+            :data-count     (get params :count 1) }]
        ])))
