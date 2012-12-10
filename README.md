@@ -8,7 +8,7 @@ for some variations:
 
 * http://maze.destructuring-bind.org?draw=path - default maze generator & solver.
 
-* http://maze.destructuring-bind.org?draw=snake&cell-size=6 - snake solver.
+* http://maze.destructuring-bind.org?draw=snake&cell-size=6&count=5 - snake solver.
 
 * http://maze.destructuring-bind.org?draw=snail&cell-size=6 - snail-trails.
 
