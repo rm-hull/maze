@@ -29,6 +29,7 @@
      [:title "Maze Generator"]
      (include-css "/css/default.css")
      (include-css "/css/spinner.css")
+     (include-css "/css/ribbon.css")
      (include-js "https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js")
      (include-js "js/requestAnim.js")
      ;(include-js "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js")
@@ -47,6 +48,12 @@
           (html 
             [:div {:class (str "bar" x)}]))]]))
 
+(defpartial ribbon [text href]
+  (html
+    [:div#ribbon
+      [:p
+        [:a {:href href :title href :rel "me"} text]]]))
+
 (defremote generate-maze [width height]
   (let [w (to-number width)
         h (to-number height)] 
@@ -60,6 +67,7 @@
     (html
       [:div
         (spinner "container grey")
+        (ribbon "Fork me on GitHub!" "https://github.com/rm-hull/maze")
         [:canvas#world 
           { :data-cell-size (get params :cell-size 10)
             :data-draw      (get params :draw "")
