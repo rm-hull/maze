@@ -60,7 +60,7 @@
     (create-maze rand-int w h)))
 
 (defremote solve [maze points]
-  (assoc maze :paths (vec (map (fn [[x y]] (shortest-path maze x y)) points))))
+  (assoc maze :paths (vec (pmap (fn [[x y]] (shortest-path maze x y)) points))))
 
 (defpage [:get "/"] {:as params}
   (layout
