@@ -52,8 +52,8 @@
         h (to-number height)] 
     (create-maze rand-int w h)))
 
-(defremote solve [maze from to]
-  (assoc maze :path (shortest-path maze from to)))
+(defremote solve [maze points]
+  (assoc maze :paths (vec (map (fn [[x y]] (shortest-path maze x y)) points))))
 
 (defpage [:get "/"] {:as params}
   (layout

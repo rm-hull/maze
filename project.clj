@@ -8,6 +8,7 @@
                  [jayq "0.3.2"]
                  [crate "0.2.1"]
                  [fetch "0.1.0-alpha2"]
+                 [ibdknox/ring-gzip-middleware "0.1.1"]
                  [org.clojars.rm-hull/monet "0.1.2-SNAPSHOT"]]
   :cljsbuild {
     :builds [

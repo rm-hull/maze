@@ -13,7 +13,7 @@
   (let [[w h] (get-in snake [:maze :size])
         cell-size (get-in snake [:cell-size])
         offset (inc (quot cell-size 2))]
-    (doseq [p (subvec (get-in snake [:maze :path]) start end)
+    (doseq [p (subvec (:path snake) start end)
             :let [x (rem p w)
                   y (rem (quot p w) h)]]
       (line-to 
@@ -71,15 +71,18 @@
 
 (defn create-snake [ctx maze callback-fn & snake-attrs]
     (doseq [attrs snake-attrs]
-      (fm/letrem [m (solve maze (:start attrs) (:end attrs))]
-        (let [snake-length (get attrs :snake-length (count (:path m)))]
+      (fm/letrem [m (solve maze [[(:start attrs) (:end attrs)]])]
+        (.log js/console (pr-str "create-snake" m))
+        (let [path (get-in m [:paths 0])
+              snake-length (get attrs :snake-length (count path))]
         (callback-fn 
           ctx 
           (-> (assoc attrs
                 :maze m 
+                :path path
                 :counter (atom 0) 
                 :snake-length snake-length
-                :limit (- (count (:path m)) snake-length 1))))))))
+                :limit (- (count path) snake-length 1))))))))
   
 (defn reset-snake [ctx snake callback-fn]
   (let [start (nth (get-in snake [:maze :path]) @(:counter snake))
