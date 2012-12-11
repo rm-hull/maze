@@ -5,7 +5,10 @@
         [hiccup.page :only [include-css include-js html5]]
         [hiccup.element :only [javascript-tag]]
         [maze.generator]
-        [maze.solver]))
+        [maze.solver]
+    :require [clojure.core.cache :as cache]))
+
+(def C (atom (cache/fifo-cache-factory {})))
 
 (defmulti to-number class)
 (defmethod to-number Number [n] n)
@@ -55,12 +58,17 @@
         [:a {:href href :title href :rel "me"} text]]]))
 
 (defremote generate-maze [width height]
-  (let [w (to-number width)
-        h (to-number height)] 
-    (create-maze rand-int w h)))
+  (let [w    (to-number width)
+        h    (to-number height)
+        id   (java.util.UUID/randomUUID)
+        maze (assoc (create-maze rand-int w h) :id id)]
+    (swap! C cache/miss id maze)
+    maze))
 
-(defremote solve [maze points]
-  (assoc maze :paths (vec (pmap (fn [[x y]] (shortest-path maze x y)) points))))
+(defremote solve [id points]
+  (let [maze (cache/lookup @C id)
+        f (fn [[x y]] (shortest-path maze x y))]
+    (assoc maze :paths (vec (pmap f points)))))
 
 (defpage [:get "/"] {:as params}
   (layout
@@ -71,5 +79,4 @@
         [:canvas#world 
           { :data-cell-size (get params :cell-size 10)
             :data-draw      (get params :draw "")
-            :data-count     (get params :count 1) }]
-       ])))
+            :data-count     (get params :count 1) }]])))

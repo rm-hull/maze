@@ -4,6 +4,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.0-beta1"]
                  [org.clojure/data.priority-map "0.0.2"]
+                 [org.clojure/core.cache "0.6.2"]
                  [noir "1.3.0-beta10"]
                  [jayq "0.3.2"]
                  [crate "0.2.1"]

@@ -71,8 +71,8 @@
 
 (defn create-snake [ctx maze callback-fn & snake-attrs]
     (doseq [attrs snake-attrs]
-      (fm/letrem [m (solve maze [[(:start attrs) (:end attrs)]])]
-        (.log js/console (pr-str "create-snake" m))
+      (fm/letrem [m (solve (:id maze) [[(:start attrs) (:end attrs)]])]
+        ;(.log js/console (pr-str "create-snake" m))
         (let [path (get-in m [:paths 0])
               snake-length (get attrs :snake-length (count path))]
         (callback-fn 
