@@ -82,7 +82,7 @@
                 :path path
                 :counter (atom 0) 
                 :snake-length snake-length
-                :limit (- (count path) snake-length 1))))))))
+                :limit (- (count path) snake-length))))))))
   
 (defn reset-snake [ctx snake callback-fn]
   (let [start (nth (get-in snake [:maze :path]) @(:counter snake))
@@ -91,7 +91,7 @@
 
 (defn animate [ctx snake]
   (letfn [(loop [] 
-            (if (< @(:counter snake) (:limit snake))
+            (if (<= @(:counter snake) (:limit snake))
               (do
                 (. js/window (requestAnimFrame loop))
                 (draw-snake ctx snake)
