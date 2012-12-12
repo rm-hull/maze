@@ -123,7 +123,7 @@
         (draw-maze ctx maze cell-size)
         (case (str draw-cmd) 
           "path"  (create-snake ctx maze draw-snake {:start 0 :end limit :cell-size cell-size :color "red" :erase-color "red"})
-          "snail" (create-snake ctx maze animate {:start (rand-int limit) :end (rand-int limit) :cell-size cell-size :color "#8182AE" :erase-color "#E2E2F1" :snake-length 3})
+          "snail" (create-snake ctx maze animate    {:start 0 :end limit :cell-size cell-size :color "#8182AE" :erase-color "#E2E2F1" :snake-length 3})
           "snake" (apply (partial create-snake ctx maze animate) (random-snakes cell-size limit n))
           nil)
         (hide ($ :div#spinner))))))
