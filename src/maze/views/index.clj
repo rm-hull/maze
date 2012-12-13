@@ -68,7 +68,7 @@
 (defremote solve [id points]
   (let [maze (cache/lookup @C id)
         f (fn [[x y]] (shortest-path maze x y))]
-    (assoc maze :paths (vec (pmap f points)))))
+    (vec (pmap f points))))
 
 (defpage [:get "/"] {:as params}
   (layout
