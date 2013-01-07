@@ -6,7 +6,7 @@
                  [org.clojure/data.priority-map "0.0.2"]
                  [org.clojure/core.cache "0.6.2"]
                  [noir "1.3.0-beta10"]
-                 [jayq "1.0.0"]
+                 [jayq "2.0.0"]
                  [crate "0.2.3"]
                  [fetch "0.1.0-alpha2"]
                  [rm-hull/ring-gzip-middleware "0.1.4-SNAPSHOT"]
