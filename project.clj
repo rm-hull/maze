@@ -9,7 +9,7 @@
                  [noir "1.3.0"]
                  [jayq "2.0.0"]
                  [crate "0.2.3"]
-                 [fetch "0.1.0-alpha2"]
+                 [rm-hull/fetch "0.1.1-SNAPSHOT"]
                  [rm-hull/ring-gzip-middleware "0.1.4-SNAPSHOT"]
                  [rm-hull/monet "0.1.3-SNAPSHOT"]]
   :cljsbuild
