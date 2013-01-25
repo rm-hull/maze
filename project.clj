@@ -13,14 +13,14 @@
                  [rm-hull/ring-gzip-middleware "0.1.4-SNAPSHOT"]
                  [rm-hull/monet "0.1.3-SNAPSHOT"]]
   :cljsbuild
-  {:builds
-   [{:source-paths ["src/maze/client"],
-     :compiler
-     {:pretty-print true,
-      :output-to "resources/public/cljs/maze.js",
-      :externs ["externs/jquery.js"],
-      :optimizations :advanced,
-      :print-input-delimiter true}}]}
+    {:builds
+     [{:source-paths ["src/maze/client"],
+       :compiler
+       {:pretty-print true,
+        :output-to "resources/public/cljs/maze.js",
+        :externs ["externs/jquery.js"],
+        :optimizations :advanced,
+        :print-input-delimiter true}}]}
   :hooks [leiningen.cljsbuild]
   :plugins [[lein-cljsbuild "0.3.0"]]
   :profiles {:dev {:dependencies [[vimclojure/server "2.3.6"]]}}
