@@ -12,7 +12,7 @@
 
 (defmulti to-number class)
 (defmethod to-number Number [n] n)
-(defmethod to-number :default [obj] (read-string obj))
+(defmethod to-number :default [obj] (binding [*read-eval* false] (read-string obj)))
 
 ; When using {:optimizations :whitespace}, the Google Closure compiler combines
 ; its JavaScript inputs into a single file, which obviates the need for a "deps.js"
@@ -33,10 +33,7 @@
      (include-css "/css/default.css")
      (include-css "/css/spinner.css")
      (include-css "/css/ribbon.css")
-     (include-js "https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js")
-     (include-js "js/requestAnim.js")
-     ;(include-js "https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js")
-     ]
+     (include-js "https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js")]
     [:body
      [:div#wrapper
       content]

@@ -2,6 +2,7 @@
   (:require [fetch.remotes :as remotes])
   (:require-macros [fetch.macros :as fm])
   (:use [monet.canvas :only [get-context stroke stroke-style stroke-cap begin-path close-path line-to move-to stroke-width]]
+        [monet.core :only [animation-frame]]
         [jayq.core :only [$ document-ready data attr hide]]))
 
 (def spinner ($ :div#spinner))
@@ -26,27 +27,29 @@
 
 (defn eraser [ctx snake p]
   (if (and (>= p 0) (< p (:limit snake)))
-    (-> ctx
-       (stroke-style (:erase-color snake))
-       (begin-path)
-       (draw-path-segments snake p (+ p 2))
-       (stroke)
-       (close-path)))
+    (-> 
+      ctx
+      (stroke-style (:erase-color snake))
+      (begin-path)
+      (draw-path-segments snake p (+ p 2))
+      (stroke)
+      (close-path)))
   ctx) ; important to return ctx for threading
  
 (defn draw-snake [ctx snake]
    ;(.log js/console (pr-str "draw-snake" ctx snake))
   (let [start  (deref (:counter snake))
         end    (+ start (:snake-length snake))]
-  (-> ctx
-      (stroke-width 4)
-      (stroke-cap "square")
-      (eraser snake (dec start))
-      (stroke-style (:color snake))
-      (begin-path)
-      (draw-path-segments snake start end)
-      (stroke)
-      (close-path))))
+  (-> 
+    ctx
+    (stroke-width 4)
+    (stroke-cap "square")
+    (eraser snake (dec start))
+    (stroke-style (:color snake))
+    (begin-path)
+    (draw-path-segments snake start end)
+    (stroke)
+    (close-path))))
 
 (defn draw-cells [ctx maze cell-size]
   (let [[w h] (:size maze)]
@@ -59,17 +62,18 @@
 
 (defn draw-maze [ctx maze cell-size]
   (let [[w h] (:size maze)]
-    (-> ctx
-        (stroke-width 2)
-        (stroke-cap "square")
-        (stroke-style "#606060")
-        (begin-path)
-        (move-to 0 (inc (* h cell-size)))
-        (line-to (inc (* w cell-size)) (inc (* h cell-size)))
-        (line-to (inc (* w cell-size)) 0)
-        (draw-cells maze cell-size)   
-        (stroke)
-        (close-path))))
+    (-> 
+      ctx
+      (stroke-width 2)
+      (stroke-cap "square")
+      (stroke-style "#606060")
+      (begin-path)
+      (move-to 0 (inc (* h cell-size)))
+      (line-to (inc (* w cell-size)) (inc (* h cell-size)))
+      (line-to (inc (* w cell-size)) 0)
+      (draw-cells maze cell-size)   
+      (stroke)
+      (close-path))))
 
 (defn start-end [snake-attrs]
   (map #(vector (:start %) (:end %)) snake-attrs))
@@ -95,24 +99,21 @@
     (create-snake ctx (:maze snake) callback-fn (assoc snake :start start :end end))))
 
 (defn animate [ctx snake]
-  ;(.log js/console (pr-str "animate" snake))
   (letfn [(loop [] 
             (if (<= @(:counter snake) (:limit snake))
               (do
-                (. js/window (requestAnimFrame loop))
+                (animation-frame loop)
                 (draw-snake ctx snake)
-                (swap! (:counter snake) inc))
-              ;(reset-snake ctx snake animate)
-              ))]
+                (swap! (:counter snake) inc))))]
      (loop)
-     (hide spinner)
-    ))
+     (hide spinner)))
 
 (defn random-snakes [cell-size limit n]
-  (->> (cycle ["#55B95F" "red" "#8182AE" "#AC85B5" "orange" "yellow"])
-       (map #(hash-map :start (rand-int limit) :end (rand-int limit) :cell-size cell-size :color % :erase-color "white" :snake-length 8))
-       (take n)
-       vec))
+  (->> 
+    (cycle ["#55B95F" "red" "#8182AE" "#AC85B5" "orange" "yellow"])
+    (map #(hash-map :start (rand-int limit) :end (rand-int limit) :cell-size cell-size :color % :erase-color "white" :snake-length 8))
+    (take n)
+    vec))
 
 (defn available-area []
   (let [div (first ($ :div#wrapper))]
@@ -126,7 +127,8 @@
           draw-cmd  (data canvas "draw")
           [width height] (map #(quot % cell-size) (available-area))
           limit     (dec (* width height))]
-      (-> canvas
+      (-> 
+        canvas
         (attr :width  (+ 2 (* cell-size width)))
         (attr :height (+ 2 (* cell-size height))));))
       (fm/remote (generate-maze width height) [maze] 
