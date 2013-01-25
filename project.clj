@@ -5,22 +5,24 @@
   :dependencies [[org.clojure/clojure "1.5.0-RC2"]
                  [org.clojure/data.priority-map "0.0.2"]
                  [org.clojure/core.cache "0.6.2"]
+                 [ns-tracker "0.2.1"]
                  [noir "1.3.0"]
                  [jayq "2.0.0"]
                  [crate "0.2.3"]
                  [fetch "0.1.0-alpha2"]
                  [rm-hull/ring-gzip-middleware "0.1.4-SNAPSHOT"]
                  [rm-hull/monet "0.1.3-SNAPSHOT"]]
-  :cljsbuild {
-    :builds [
-      {:source-path "src/maze/client"
-       :compiler {:output-to "resources/public/cljs/maze.js"
-                  :optimizations :advanced
-                  :externs ["externs/jquery.js"]
-                  :print-input-delimiter true
-                  :pretty-print true}}]}
+  :cljsbuild
+  {:builds
+   [{:source-paths ["src/maze/client"],
+     :compiler
+     {:pretty-print true,
+      :output-to "resources/public/cljs/maze.js",
+      :externs ["externs/jquery.js"],
+      :optimizations :advanced,
+      :print-input-delimiter true}}]}
   :hooks [leiningen.cljsbuild]
-  :plugins [[lein-cljsbuild "0.2.10"]]
+  :plugins [[lein-cljsbuild "0.3.0"]]
   :profiles {:dev {:dependencies [[vimclojure/server "2.3.6"]]}}
   :main maze.server
   :min-lein-version "2.0.0"
