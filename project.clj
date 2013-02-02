@@ -2,7 +2,7 @@
   :url "http://maze.destructuring-bind.org"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.5.0-RC3"]
+  :dependencies [[org.clojure/clojure "1.5.0-RC4"]
                  [org.clojure/data.priority-map "0.0.2"]
                  [org.clojure/core.cache "0.6.2"]
                  [ns-tracker "0.2.1"]
@@ -21,7 +21,7 @@
         :externs ["externs/jquery.js"],
         :optimizations :advanced,
         :print-input-delimiter false}}]}
-  :hooks [leiningen.cljsbuild]
+  ;:hooks [leiningen.cljsbuild]
   :plugins [[lein-cljsbuild "0.3.0"]]
   :profiles {:dev {:dependencies [[vimclojure/server "2.3.6"]]}}
   :main maze.server

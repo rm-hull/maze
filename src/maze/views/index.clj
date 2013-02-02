@@ -12,7 +12,7 @@
 
 (defmulti to-number class)
 (defmethod to-number Number [n] n)
-(defmethod to-number :default [obj] (binding [*read-eval* false] (read-string obj)))
+(defmethod to-number :default [obj] (read-string obj))
 
 ; When using {:optimizations :whitespace}, the Google Closure compiler combines
 ; its JavaScript inputs into a single file, which obviates the need for a "deps.js"
