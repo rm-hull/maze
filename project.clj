@@ -21,7 +21,7 @@
         :externs ["externs/jquery.js"],
         :optimizations :advanced,
         :print-input-delimiter false}}]}
-  ;:hooks [leiningen.cljsbuild]
+  :hooks [leiningen.cljsbuild]
   :plugins [[lein-cljsbuild "0.3.0"]]
   :profiles {:dev {:dependencies [[vimclojure/server "2.3.6"]]}}
   :main maze.server
