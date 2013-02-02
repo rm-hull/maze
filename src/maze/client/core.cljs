@@ -5,7 +5,8 @@
         [monet.core :only [animation-frame]]
         [jayq.core :only [$ document-ready data attr hide]]))
 
-(def spinner ($ :div#spinner))
+(defn hide-spinner []
+  (hide ($ :div#spinner)))
 
 (defn coord->pos [[^long x ^long y] [^long w ^long h]]
   (+ 
@@ -106,7 +107,7 @@
                 (draw-snake ctx snake)
                 (swap! (:counter snake) inc))))]
      (loop)
-     (hide spinner)))
+     (hide-spinner)))
 
 (defn random-snakes [cell-size limit n]
   (->> 
@@ -134,7 +135,7 @@
       (fm/remote (generate-maze width height) [maze] 
         (draw-maze ctx maze cell-size)
         (case (str draw-cmd) 
-          "path"  (do (create-snake ctx maze draw-snake {:start 0 :end limit :cell-size cell-size :color "red" :erase-color "red"}) (hide spinner))
+          "path"  (do (create-snake ctx maze draw-snake {:start 0 :end limit :cell-size cell-size :color "red" :erase-color "red"}) (hide-spinner))
           "snail" (create-snake ctx maze animate {:start 0 :end limit :cell-size cell-size :color "#8182AE" :erase-color "#E2E2F1" :snake-length 3})
           "snake" (apply (partial create-snake ctx maze animate) (random-snakes cell-size limit (data canvas "count")))
-          (hide spinner))))))
+          (hide-spinner))))))
