@@ -11,7 +11,7 @@
                  [crate "0.2.3"]
                  [rm-hull/ring-gzip-middleware "0.1.4-SNAPSHOT"]
                  [rm-hull/fetch "0.1.1-SNAPSHOT"]
-                 [rm-hull/monet "0.1.3-SNAPSHOT"]]
+                 [rm-hull/monet "0.1.4-SNAPSHOT"]]
   :cljsbuild
     {:builds
      [{:source-paths ["src/maze/client"],
