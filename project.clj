@@ -5,14 +5,14 @@
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [org.clojure/clojurescript "0.0-1806"]
                  [org.clojure/data.priority-map "0.0.2"]
-                 [org.clojure/core.cache "0.6.2"]
+                 [org.clojure/core.cache "0.6.3"]
                  [ns-tracker "0.2.1"]
                  [noir "1.3.0"]
-                 [jayq "2.1.0"]
-                 [crate "0.2.3"]
-                 [rm-hull/ring-gzip-middleware "0.1.4-SNAPSHOT"]
+                 [jayq "2.3.0"]
+                 [crate "0.2.4"]
+                 [rm-hull/ring-gzip-middleware "0.1.6"]
                  [rm-hull/fetch "0.1.1-SNAPSHOT"]
-                 [rm-hull/monet "0.1.6-SNAPSHOT"]]
+                 [rm-hull/monet "0.1.7"]]
   :cljsbuild
     {:builds
      [{:source-paths ["src/maze/client"],
@@ -26,6 +26,6 @@
   :plugins [[lein-cljsbuild "0.3.2"]]
   :profiles {:dev {:dependencies [[vimclojure/server "2.3.6"]]}}
   :main maze.server
-  :min-lein-version "2.0.0"
-  :warn-on-reflection true
+  :min-lein-version "2.2.0"
+  :global-vars { *warn-on-reflection* true}
   :description "A web-based maze generator and solver")
