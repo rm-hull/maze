@@ -3,16 +3,16 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.5.1"]
-                 [org.clojure/clojurescript "0.0-1806"]
+                 [org.clojure/clojurescript "0.0-1878"]
                  [org.clojure/data.priority-map "0.0.2"]
                  [org.clojure/core.cache "0.6.3"]
                  [ns-tracker "0.2.1"]
                  [noir "1.3.0"]
-                 [jayq "2.3.0"]
+                 [jayq "2.4.0"]
                  [crate "0.2.4"]
                  [rm-hull/ring-gzip-middleware "0.1.6"]
                  [rm-hull/fetch "0.1.1-SNAPSHOT"]
-                 [rm-hull/monet "0.1.7"]]
+                 [rm-hull/monet "0.1.8"]]
   :cljsbuild
     {:builds
      [{:source-paths ["src/maze/client"],

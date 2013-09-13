@@ -1,7 +1,7 @@
 (ns maze.views.index
   (:use [noir.core :only [defpage defpartial]]
         [noir.fetch.remotes :only [defremote]]
-        [hiccup.core :only [html]] 
+        [hiccup.core :only [html]]
         [hiccup.page :only [include-css include-js html5]]
         [hiccup.element :only [javascript-tag]]
         [maze.generator]
@@ -21,8 +21,8 @@
      (include-css "/css/default.css")
      (include-css "/css/spinner.css")
      (include-css "/css/ribbon.css")
-     (include-js "https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js")
-     (include-js "/cljs/maze.js")] 
+     (include-js "https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js")
+     (include-js "/cljs/maze.js")]
     [:body
      [:div#wrapper content] ]))
 
@@ -31,7 +31,7 @@
     [:div#spinner {:class css-class }
       [:div {:class "spinner"}
        (for [x (range 1 13)]
-          (html 
+          (html
             [:div {:class (str "bar" x)}]))]]))
 
 (defpartial ribbon [text href]
@@ -59,7 +59,7 @@
       [:div
         (spinner "container grey")
         (ribbon "Fork me on GitHub!" "https://github.com/rm-hull/maze")
-        [:canvas#world 
+        [:canvas#world
           { :data-cell-size (get params :cell-size 10)
             :data-draw      (get params :draw "")
             :data-count     (get params :count 1) }]])))
