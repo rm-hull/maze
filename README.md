@@ -95,3 +95,7 @@ Note, requires leiningen 2.0
 
 * http://lukevanderhart.com/2011/09/30/using-javascript-and-clojurescript.html
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/rm-hull/maze/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
